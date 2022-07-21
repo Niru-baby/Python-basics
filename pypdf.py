@@ -47,21 +47,30 @@ for k in range(1, length//2):
 def find_skills(text,file_path):
     skills = []
     for i in WED_DEV_SKILLS:
-        pattern = re.compile(i)
+        pattern = re.compile(i.lower())
         if bool(re.search(pattern, text.lower())):
             skills.append(i)
     return skills
 
-text = get_text_from_pdf(os.path.join(os.getcwd(), "New Folder","cv.pdf" ))
+
+def find_data(text): 
+
+    email = re.findall(pattern,text)
+    phonenumber = re.findall(phone_pattern,text)
+    link_din = re.findall(linkdin,text)
+    skills = find_skills(text,WED_DEV_SKILLS)
 
 
-email = re.findall(pattern,text)
-phonenumber = re.findall(phone_pattern,text)
-link_din = re.findall(linkdin,text)
-skills = find_skills(text,WED_DEV_SKILLS)
+    print(email)
+    print(phonenumber)
+    print(link_din)
+    print(skills)
 
 
-print(email)
-print(phonenumber)
-print(link_din)
-print(skills)
+allfiles = os.listdir()
+for i in allfiles:
+    if i.endswith(".pdf"):
+        
+        text = get_text_from_pdf(os.path.join(os.getcwd(),i ))
+        find_data(text)
+        print("--"*10,i)
